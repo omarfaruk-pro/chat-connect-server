@@ -9,7 +9,14 @@ configDotenv();
 const port = process.env.PORT || 5000;
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:3000",    
+    "https://chatconnect-nu.vercel.app"  
+  ],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
 app.use(express.json());
 const httpServer = createServer(app);
 
@@ -35,7 +42,10 @@ run().catch(console.dir);
 
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:3000",
+          origin: [
+              "http://localhost:3000",
+              "https://chatconnect-nu.vercel.app"
+            ],
         methods: ["GET", "POST"]
     }
 });
